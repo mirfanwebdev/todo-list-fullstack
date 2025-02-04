@@ -7,9 +7,10 @@ const router = express.Router();
 // Get all todos for user
 router.get("/", authenticate, async (req, res) => {
   try {
-    const todos = await pool.querry("SELECT * FROM todos WHERE user_id = $1", [
+    const todos = await pool.query("SELECT * FROM todos WHERE user_id = $1", [
       req.userId,
     ]);
+    // const todos = await pool.query("SELECT * FROM todos");
 
     res.status(200).json(todos.rows);
   } catch (err) {

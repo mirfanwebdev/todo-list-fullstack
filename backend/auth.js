@@ -1,7 +1,9 @@
+require("dotenv").config();
 const express = require("express");
 const bycript = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const pool = require("./db");
+const JWT_SECRET = process.env.JWT_SECRET;
 
 const router = express.Router();
 
@@ -42,7 +44,7 @@ router.post("/login", async (req, res) => {
       return res.status(401).json({ error: "Invalid email or password" });
     }
 
-    const token = jwt.sign({ userId: user.rows[0].id }, "your_jwt_secret", {
+    const token = jwt.sign({ userId: user.rows[0].id }, JWT_SECRET, {
       expiresIn: "1h",
     });
 
